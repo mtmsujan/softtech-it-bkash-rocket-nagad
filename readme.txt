@@ -67,6 +67,10 @@ Yes definitely, Maintained high level validation in both frontend and backend.
 
 == Changelog ==
 
+= 2.3 =
+* Added - qr scanner integrated
+* Fix - loading issue
+
 = 2.2 =
 * Added - sms api integrated
 

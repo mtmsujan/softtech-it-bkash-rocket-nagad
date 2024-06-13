@@ -63,6 +63,11 @@ You may install the plugin using one of the three following methods:
 
 ### Changelog
 
+= 2.3 =
+
+- Added - qr scanner integrated
+- Fix - loading issue
+
 = 2.2 =
 
 - Added - sms api integrated
