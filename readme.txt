@@ -1,9 +1,9 @@
-=== Plugin Name ===
+=== SoftTech-IT bKash, Rocket, Nagad ===
 Contributors: sujon3g, developerzinan
-Tags: woocommerce, bkash, rocket, nagad, Bangladesh, BDT, gateway, woocommerce bkash, sujan, softtech, softtech-it, mtm sujan, toriqul, toriqul mowla, toriqul mowla sujan
+Tags: woocommerce, bkash wordpress plugin, rocket wordpress plugin, nagad wordpress plugin, mtm sujan
 Requires at least: 4.5.0
-Tested up to: 5.4
-Stable tag: 2.2
+Tested up to: 6.5.4
+Stable tag: 2.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

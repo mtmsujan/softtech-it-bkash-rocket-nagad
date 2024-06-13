@@ -3,7 +3,7 @@
 Plugin Name: SoftTech-IT bKash, Rocket, Nagad
 Plugin URI:  http://softtech-it.com
 Description: This plugin helps users to integrate bkash , rocket and nagad payment gateway along with SMS API with woocommerce. bKash, rocket and nagad all of them are money transfer systems of Bangladesh by facilitating money transfer through mobile phones. This plugin is an addon for woocommerce, so woocommerce is mandatory
-Version:     2.2
+Version:     2.3
 Author:      Md Toriqul Mowla Sujan
 Author URI:  http://facebook.com/sujan4g
 License:     GPL2
@@ -11,16 +11,17 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Domain Path: /languages
 Text Domain: stb
 */
-defined( 'ABSPATH' ) or die( 'Only a foolish person try to access directly to see this white page. :-) ' );
+defined('ABSPATH') or die('Only a foolish person try to access directly to see this white page. :-) ');
 
 /**
  * Plugin language
  */
-load_plugin_textdomain( 'stb', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+load_plugin_textdomain('stb', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
-add_action( "admin_menu", "softtechit_add_sms_submenu_page" );
+add_action("admin_menu", "softtechit_add_sms_submenu_page");
 
-function softtechit_add_sms_submenu_page() {
+function softtechit_add_sms_submenu_page()
+{
   add_submenu_page(
     'woocommerce',
     'SMS API Integration Page',
@@ -31,38 +32,38 @@ function softtechit_add_sms_submenu_page() {
   );
 }
 
-function stit_sms_integration_callback() {
+function stit_sms_integration_callback()
+{
 
-  if ( !current_user_can( 'manage_options' ) ) {
-    wp_die( 'Unauthorized user' );
+  if (!current_user_can('manage_options')) {
+    wp_die('Unauthorized user');
   }
 
-  if ( isset( $_POST['save'] ) ) {
+  if (isset($_POST['save'])) {
 
-    if ( isset( $_POST['sms-api-url'] ) ) {
+    if (isset($_POST['sms-api-url'])) {
       $url = $_POST["sms-api-url"];
-      update_option( 'sms-api-url', $url );
+      update_option('sms-api-url', $url);
     }
 
-    if ( isset( $_POST['sms-api-username'] ) ) {
+    if (isset($_POST['sms-api-username'])) {
       $username = $_POST["sms-api-username"];
-      update_option( 'sms-api-username', $username );
+      update_option('sms-api-username', $username);
     }
 
-    if ( isset( $_POST['sms-api-password'] ) ) {
+    if (isset($_POST['sms-api-password'])) {
       $password = $_POST["sms-api-password"];
-      update_option( 'sms-api-password', $password );
+      update_option('sms-api-password', $password);
     }
 
     echo '<div id="setting-error-settings_updated" class="notice notice-success settings-error is-dismissible">
 <p><strong>Settings saved.</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>';
-
   }
 
-  $sms_url      = get_option( 'sms-api-url' ) ?? '';
-  $sms_username = get_option( 'sms-api-username' ) ?? '';
-  $sms_password = get_option( 'sms-api-password' ) ?? '';
-  ?>
+  $sms_url      = get_option('sms-api-url') ?? '';
+  $sms_username = get_option('sms-api-username') ?? '';
+  $sms_password = get_option('sms-api-password') ?? '';
+?>
   <div class="wrap woocommerce">
     <form method="post" id="mainform" action="" enctype="multipart/form-data">
       <?php settings_errors(); ?>
@@ -76,8 +77,7 @@ function stit_sms_integration_callback() {
             <td class="forminp">
               <fieldset>
                 <legend class="screen-reader-text"><span>API URL</span></legend>
-                <input class="input-text regular-input " type="url" name="sms-api-url" id="sms-api-url" style=""
-                  value="<?php echo $sms_url; ?>" placeholder="">
+                <input class="input-text regular-input " type="url" name="sms-api-url" id="sms-api-url" style="" value="<?php echo $sms_url; ?>" placeholder="">
                 <p class="description">The API link / url you have got from your sms gateway provider. It can be like this
                   ( http://66.45.237.70/api.php )</p>
               </fieldset>
@@ -91,8 +91,7 @@ function stit_sms_integration_callback() {
             <td class="forminp">
               <fieldset>
                 <legend class="screen-reader-text"><span>Username</span></legend>
-                <input class="input-text regular-input " type="text" name="sms-api-username" id="sms-api-username"
-                  style="" value="<?php echo $sms_username; ?>" placeholder="">
+                <input class="input-text regular-input " type="text" name="sms-api-username" id="sms-api-username" style="" value="<?php echo $sms_username; ?>" placeholder="">
                 <p class="description">The Username of your API</p>
               </fieldset>
             </td>
@@ -105,8 +104,7 @@ function stit_sms_integration_callback() {
             <td class="forminp">
               <fieldset>
                 <legend class="screen-reader-text"><span>Password</span></legend>
-                <input class="input-text regular-input " type="password" name="sms-api-password" id="sms-api-password"
-                  style="" value="<?php echo $sms_password; ?>" placeholder="">
+                <input class="input-text regular-input " type="password" name="sms-api-password" id="sms-api-password" style="" value="<?php echo $sms_password; ?>" placeholder="">
                 <p class="description">The Password of your API</p>
               </fieldset>
             </td>
@@ -117,28 +115,29 @@ function stit_sms_integration_callback() {
       </table>
 
       <p class="submit">
-        <?php wp_nonce_field( 'sms_nonce_field' ); ?>
+        <?php wp_nonce_field('sms_nonce_field'); ?>
         <button name="save" class="button-primary woocommerce-save-button" type="submit" value="Save changes">Save
           changes</button>
 
       </p>
     </form>
   </div>
-  <?php
+<?php
 }
 
-add_filter( "woocommerce_thankyou_order_received_text", "softtechit_send_sms_when_order_received" );
+add_filter("woocommerce_thankyou_order_received_text", "softtechit_send_sms_when_order_received");
 
-function softtechit_send_sms_when_order_received() {
+function softtechit_send_sms_when_order_received()
+{
 
-  $order_id = get_query_var( 'order-received' );
-  $order    = new WC_Order( $order_id );
+  $order_id = get_query_var('order-received');
+  $order    = new WC_Order($order_id);
 
-  $sms_url      = get_option( 'sms-api-url' ) ?? '';
-  $sms_username = get_option( 'sms-api-username' ) ?? '';
-  $sms_password = get_option( 'sms-api-password' ) ?? '';
+  $sms_url      = get_option('sms-api-url') ?? '';
+  $sms_username = get_option('sms-api-username') ?? '';
+  $sms_password = get_option('sms-api-password') ?? '';
 
-  if ( $sms_url && $sms_username && $sms_password ) {
+  if ($sms_url && $sms_username && $sms_password) {
     $url      = $sms_url;
     $username = $sms_username;
     $password = $sms_password;
@@ -152,21 +151,22 @@ function softtechit_send_sms_when_order_received() {
     );
 
     $ch = curl_init();
-    curl_setopt( $ch, CURLOPT_URL, $url );
-    curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $data ) );
-    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-    $smsResult = curl_exec( $ch );
-    curl_close( $ch );
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $smsResult = curl_exec($ch);
+    curl_close($ch);
   }
 }
 
 
-add_action( 'wp_enqueue_scripts', 'softtech_payment_method_script' );
-function softtech_payment_method_script() {
-  wp_enqueue_script( 'stb-script', plugins_url( 'js/scripts.js', __FILE__ ), array( 'jquery' ), '1.0', true );
-  wp_enqueue_style( 'stb-style', plugins_url( 'css/style.css', __FILE__ ) );
+add_action('wp_enqueue_scripts', 'softtech_payment_method_script');
+function softtech_payment_method_script()
+{
+  wp_enqueue_script('stb-script', plugins_url('js/scripts.js', __FILE__), array('jquery'), '1.0', true);
+  wp_enqueue_style('stb-style', plugins_url('css/style.css', __FILE__));
 }
 
-require_once ( 'bkash.php' );
-require_once ( 'rocket.php' );
-require_once ( 'nagad.php' );
+require_once('bkash.php');
+require_once('rocket.php');
+require_once('nagad.php');
